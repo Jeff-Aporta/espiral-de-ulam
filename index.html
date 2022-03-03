@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <title>Espiral de Ulam</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+</head>
+
+<body>
+     <h1>Espiral de Ulam</h1>
+     <script>
+          LADO = 5
+          COLUMNAS = 101
+          FILAS = 101
+
+          function setup() {
+               createCanvas(COLUMNAS * LADO+LADO, FILAS * LADO+LADO)
+               rectMode(CENTER);
+               textAlign(CENTER, CENTER)
+               textSize(LADO / 2);
+               noStroke()
+          }
+
+          function isPrime(num) {
+               s = Math.sqrt(num)
+               for (let i = 2; i <= s; i++){
+                    if (num % i === 0) {
+                         return false;
+                    }
+               }
+               return num > 1;
+          }
+
+          function draw() {
+               background("black")
+
+               let pos = createVector(width / 2, height / 2)
+
+               let dirección = createVector(LADO, 0)
+               let envergadura = 1
+               let contador_envergadura = 0
+               let contador_repeticiones_envergadura = 0
+
+               for (let i = 1; i <= COLUMNAS * FILAS; i++) {
+                    if (isPrime(i)) {
+                         fill("skyblue")
+                    }else{
+                         fill("white")
+                    }
+                    rect(pos.x, pos.y, LADO)
+                    fill("black")
+                    //text(i, pos.x, pos.y, LADO, LADO)
+                    pos.add(dirección)
+                    contador_envergadura++
+                    if (contador_envergadura == envergadura) {
+                         let temp = dirección.x
+                         dirección.x = dirección.y
+                         dirección.y = -temp
+                         contador_envergadura = 0
+                         if (contador_repeticiones_envergadura % 2 == 1) {
+                              envergadura++
+                         }
+                         contador_repeticiones_envergadura++
+                    }
+               }
+          }
+     </script>
+</body>
+
+</html>
